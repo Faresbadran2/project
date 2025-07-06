@@ -13,7 +13,7 @@ env:
   KUBECONFIG: ${{ secrets.KUBE_CONFIG }}
 
 jobs:
-  # Continuous Integration (CI) - Build and Test
+  # Continuous Integration (CI) - Build and Test step
   ci:
     runs-on: ubuntu-latest
     steps:
