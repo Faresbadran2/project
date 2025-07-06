@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"aks","Source":"./modules/aks","Dir":"modules/aks"},{"Key":"database","Source":"./modules/database","Dir":"modules/database"},{"Key":"ingress","Source":"./modules/ingress","Dir":"modules/ingress"},{"Key":"network","Source":"./modules/network","Dir":"modules/network"}]}

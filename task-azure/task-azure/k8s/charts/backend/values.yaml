@@ -1,0 +1,74 @@
+replicaCount: 2
+
+image:
+  repository: faresbadocker/todo-backend
+  tag: 1.0.0
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 5000
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  hosts:
+    - host: "api.example.com"  # Add a proper host
+      paths:
+        - path: /api
+          pathType: Prefix
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+
+postgresql:
+  enabled: true
+  auth:
+    username: postgres
+    password: "fares123"
+    database: todo
+  primary:
+    service:
+      name: postgres-postgresql
+
+secrets:
+  postgres:
+    name: postgres-secret
+
+env:
+  FLASK_ENV: "production"
+  PORT: "5000"
+
+startupProbe:
+  httpGet:
+    path: /health
+    port: 5000
+  failureThreshold: 30
+  periodSeconds: 5
+
+livenessProbe:
+  httpGet:
+    path: /health
+    port: 5000
+  initialDelaySeconds: 60
+  periodSeconds: 10
+
+readinessProbe:
+  httpGet:
+    path: /health
+    port: 5000
+  initialDelaySeconds: 30
+  periodSeconds: 5
